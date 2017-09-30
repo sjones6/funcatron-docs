@@ -1,5 +1,9 @@
 # Funcatron
 
+Funcatron is a functional framework for building Node applications.
+
+## Introduction
+
 At its core, an Node web server is nothing more than this:
 
 ```javascript
@@ -20,7 +24,7 @@ Install via npm or yarn:
 
 `npm install funcatron --save`
 
-or 
+or
 
 `yarn add funcatron`
 
@@ -42,7 +46,7 @@ Now, this isn't a very interesting application since it returns the same respons
 
 So, let's add a few more routes:
 
-```
+```javascript
 const http = funcatron([
    {
       path: "/",
@@ -64,6 +68,8 @@ const http = funcatron([
 
 http.listen(8000)
 ```
+
+
 
 
 
