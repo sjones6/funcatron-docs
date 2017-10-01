@@ -43,6 +43,8 @@ module.exports = validate => stack(
 )
 ```
 
+The response from this higher-order function is a nested stack that will run all the middleware methods in order, ending with the `validate` method that is passed in.
+
 Using this higher-order function, we can create all sorts of validations. Let's create one to validate a user registration:
 
 ```javascript
