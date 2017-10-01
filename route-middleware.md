@@ -17,10 +17,10 @@ const bodyParser = require("body-parser")() // https://github.com/expressjs/body
 const makeBodyParsed = group({
     path: "/api",
     handler: stack(
-    
+
         // First, parse the incoming JSON body
         ({req, res, next}) => bodyParser(req, res, next),
-        
+
         // Then ensure a body exists
         ({req, res, next}) => {
             if (!req.body) {
@@ -37,9 +37,9 @@ module.exports = makeBodyParsed([
     {
         path: "/register",
         method: "post",
-        handler: ({req, res}) => {
-            
-        }        
+        handler: ({req, res}) => createUser(req.body, err => {
+            return (!err) ? res.end("success!") : res.end("Whoops! Failure")
+        })    
     }
 ])
 ```
