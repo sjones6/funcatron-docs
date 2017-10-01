@@ -29,8 +29,6 @@ module.exports = stack(
 )
 ```
 
-
-
 ## Nested Stacks
 
 Now we've got a stack that parses and verifies the body exists; now let's create a higher-order function that injects a validation method into a new stack.
@@ -67,35 +65,24 @@ module.exports = validateUser
 ```
 
 ```javascript
-//
-const { 
-    stack,
-    group
-} = require("funcatron")
-const validateBody = require("./validate-body")
+// user-registration-route.js
+const { stack } = require("funcatron")
+const validateRegistration = require("./validate-user-registration")
+const createUser = require('./create-user') // some method that persists to DB
 
-const validateUser = validateBody(
-    ({req, res, next}) => {
-       if (!req.body.email && !req.body.name) {
-           res.statusCode = 400;
-           res.end("Name and email required")
-       } else {
-           next()
-       }
-    }
-)
-
-const  = group({
-    path: "/api",
-    handler: stack(
-        validateUser, 
-        handler: ({req, res}) => createUser(req.body, err => {
+module.exports = {
+   path: "/register",
+   method: "post",
+   handler: stack(
+       validateUser, 
+        ({req, res}) => createUser(req.body, err => {
             return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
         })
-    )
-})
-
+   )
+}
 ```
+
+## Groups and Stacks
 
 
 
