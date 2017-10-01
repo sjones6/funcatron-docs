@@ -17,11 +17,7 @@ const bodyParser = require("body-parser")() // https://github.com/expressjs/body
 const makeBodyParsed = group({
     path: "/api",
     handler: stack(
-
-        // First, parse the incoming JSON body
         ({req, res, next}) => bodyParser(req, res, next),
-
-        // Then ensure a body exists
         ({req, res, next}) => {
             if (!req.body) {
                 res.statusCode = 400;
