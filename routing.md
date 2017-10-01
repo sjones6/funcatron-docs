@@ -43,8 +43,6 @@ Now, let's say that you want to guard your API routes to only allow authorized u
 
 Route groups allow you to apply a path prefix and a middleware method to all routes within the group.
 
-
-
 ```javascript
 const { group } = require('funcatron')
 const checkAuth = require("./middleware/check-auth")
@@ -53,7 +51,7 @@ const makeAPIRoutes = group({
 
     // route prefix
     path: "/api,
-    
+
     // This middleware handler will be applied to all requests in the route group
     handler: ({req, res, next}) => {
       if(checkAuth(req)) {
@@ -67,12 +65,12 @@ const makeAPIRoutes = group({
 
 module.exports = makeAPIRoutes([
   {
-     path: "profile", // matches "/api/profile"
+     path: "profile", // matches "GET: /api/profile"
      method: "get",
      handler: ({req, res}) => res.end("Your profile")
   },
   {
-     path: "profile",
+     path: "profile", // matches "POST: /api/profile"
      method: "post",
      handler({req, res}) => res.end("Profile updated")
   }
