@@ -86,39 +86,5 @@ module.exports = {
 
 
 
-Let's make a route group \(see [Routing ](/routing.md)for how to make route groups\) for the API that parses all JSON payloads using the Express body-parser package:
-
-```javascript
-const { 
-    stack,
-    group
-} = require("funcatron")
-
-const  = group({
-    path: "/api",
-    handler: stack(
-        ({req, res, next}) => bodyParser(req, res, next), // parse body
-        ({req, res, next}) => {                           // only allow request that have bodies through.
-            if (!req.body) {
-                res.statusCode = 400;
-                res.end("Body required")
-            } else {
-                next()
-            }
-        }
-    )
-})
-
-module.exports = makeBodyParsed([
-    {
-        path: "/register",
-        method: "post",
-        handler: ({req, res}) => createUser(req.body, err => {
-            return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
-        })
-    }
-])
-```
-
 
 
