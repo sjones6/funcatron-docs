@@ -64,6 +64,8 @@ const validateUser = validateBody(
 module.exports = validateUser
 ```
 
+Our middleware stack now parses the JSON body into a useful format and ensures that body exists; then it applies a validation for a user registration. The final thing to do is wire up a route that runs the middleware and actually persists the user, which could be stubbed out like so:
+
 ```javascript
 // user-registration-route.js
 const { stack } = require("funcatron")
@@ -82,9 +84,9 @@ module.exports = {
 }
 ```
 
+Eventually, you'd need to pass this into your routes array.
+
 ## Groups and Stacks
-
-
 
 
 
