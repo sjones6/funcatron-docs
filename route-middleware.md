@@ -8,7 +8,7 @@ Funcatron makes it easy to compose sets of middleware functions that can be comp
 
 A stack is a sequence of functions that can run asynchronously. Stacks can be nested to form larger stacks.
 
-Let's create a stack that parses the body of a request and ensure it exists before allowing the request through:
+Let's create a stack that parses the body of a request into JSON and ensures it exists before allowing the request through:
 
 ```javascript
 // verify-body.js
@@ -43,7 +43,7 @@ module.exports = validate => stack(
 )
 ```
 
-The response from this higher-order function is a nested stack that will run all the middleware methods in order, ending with the `validate` method that is passed in.
+The return from this higher-order function is a nested stack that will run all the middleware methods in order, ending with the `validate` method that is passed in.
 
 Using this higher-order function, we can create all sorts of validations. Let's create one to validate a user registration:
 
