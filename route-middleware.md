@@ -84,7 +84,7 @@ module.exports = {
 }
 ```
 
-Eventually, you'd need to pass this into your routes array.
+Eventually, you'd need to pass this into the routes array passed into the `funcatron` method.
 
 ## Groups and Stacks
 
