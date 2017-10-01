@@ -69,5 +69,5 @@ const http = funcatron([
 http.listen(8000)
 ```
 
-That's a little better, but it's going to get really cumbersome for any serious application with more than a handful of routes. [Read up on how Funcatron handles routing. ](/routing.md)
+That's a little better, but it's going to get really cumbersome for any serious application with more than a handful of routes. [Routing in Functatron](/routing.md)
 
