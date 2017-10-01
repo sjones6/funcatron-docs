@@ -13,7 +13,6 @@ Let's create a stack that parses the body of a request and ensure it exists befo
 ```javascript
 // verify-body.js
 const { stack } = require("funcatron")
-
 const bodyParser = require("body-parser")() // https://github.com/expressjs/body-parser
 
 module.exports = stack(
