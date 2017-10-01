@@ -1,5 +1,7 @@
 # Routing
 
+Let's 
+
 ```javascript
 funcatron([
     {
@@ -14,13 +16,12 @@ funcatron([
     },
     {
         handler: ({req, res}) => {
-        res.statusCode = 400
-        res.end("Not found")
+            res.statusCode = 400
+            res.end("Not found")
+        }
     }
 ])
 ```
-
-
 
 
 
