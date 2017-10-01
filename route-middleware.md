@@ -39,7 +39,7 @@ module.exports = makeBodyParsed([
         method: "post",
         handler: ({req, res}) => createUser(req.body, err => {
             return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
-        })    
+        })
     }
 ])
 ```
