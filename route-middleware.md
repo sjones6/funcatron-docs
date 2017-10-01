@@ -13,10 +13,10 @@ Let's create a stack that parses the body of a request and ensure it exists befo
 ```javascript
 // verify-body.js
 const { stack } = require("funcatron")
-const bodyParser = require("body-parser")() // https://github.com/expressjs/body-parser
+const jsonParser = require("body-parser").json() // https://github.com/expressjs/body-parser
 
 module.exports = stack(
-    ({req, res, next}) => bodyParser(req, res, next), // parse body
+    ({req, res, next}) => jsonParser(req, res, next), // parse body
     ({req, res, next}) => {                           // only allow request that have bodies through.
         if (!req.body) {
             res.statusCode = 400;
