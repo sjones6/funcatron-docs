@@ -12,7 +12,7 @@ Let's create a stack that parses the body of a request and ensure it exists befo
 
 ```javascript
 // verify-body.js
-const { stack } = require('funcatron')
+const { stack } = require("funcatron")
 
 const bodyParser = require("body-parser")() // https://github.com/expressjs/body-parser
 
@@ -31,6 +31,72 @@ module.exports = stack(
 
 
 
+## Nested Stacks
+
+Now we've got a stack that parses and verifies the body exists; now let's create a higher-order function that injects a validation method into a new stack.
+
+```javascript
+// validate-body.js
+const { stack } = require("funcatron")
+const verifyBody = require("./verify-body")
+
+module.exports = validate => stack(
+    verifyBody,
+    validate
+)
+```
+
+Using this higher-order function, we can create all sorts of validations. Let's create one to validate a user registration:
+
+```javascript
+// validate-user-registration.js
+const validateBody = require('./validate-body')
+
+const validateUser = validateBody(
+    ({req, res, next}) => {
+       if (!req.body.email && !req.body.name) {
+           res.statusCode = 400;
+           res.end("Name and email required")
+       } else {
+           next()
+       }
+    }
+)
+
+module.exports = validateUser
+```
+
+```javascript
+//
+const { 
+    stack,
+    group
+} = require("funcatron")
+const validateBody = require("./validate-body")
+
+const validateUser = validateBody(
+    ({req, res, next}) => {
+       if (!req.body.email && !req.body.name) {
+           res.statusCode = 400;
+           res.end("Name and email required")
+       } else {
+           next()
+       }
+    }
+)
+
+const  = group({
+    path: "/api",
+    handler: stack(
+        validateUser, 
+        handler: ({req, res}) => createUser(req.body, err => {
+            return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
+        })
+    )
+})
+
+```
+
 
 
 Let's make a route group \(see [Routing ](/routing.md)for how to make route groups\) for the API that parses all JSON payloads using the Express body-parser package:
@@ -40,8 +106,6 @@ const {
     stack,
     group
 } = require("funcatron")
-
-const bodyParser = require("body-parser")() // https://github.com/expressjs/body-parser
 
 const  = group({
     path: "/api",
