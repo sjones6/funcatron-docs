@@ -8,6 +8,58 @@ Funcatron makes it easy to compose sets of middleware functions that can be comp
 
 A stack is a sequence of functions that can run asynchronously. Stacks can be nested to form larger stacks.
 
+Here's a really simple stack:
+
+```javascript
+const { stack } = require("funcatron")
+
+module.exports = stack(
+    ({req, res, next}) => {
+        console.log("First")
+        next()                          // no need to explicitly pass req/res through
+    },
+    ({req, res, next}) => {
+        console.log("Second")
+        next({req, res})                // but you can if you wish :)
+    }
+)
+```
+
+You can also nest stacks:
+
+```javascript
+const { stack } = require("funcatron")
+
+module.exports = stack(
+    ({req, res, next}) => {
+        console.log("First")
+        next()                          
+    },
+    
+    // Nested stack
+    stack(
+        ({req, res, next}) => {
+            console.log("Second")
+            next({req, res}) // but you can if you wish :)
+        },
+        ({req, res, next}) => {
+            console.log("Third")
+            next({req, res}) // but you can if you wish :)
+        },
+    )
+    ({req, res, next}) => {
+        console.log("Fourth")
+        next({req, res})                
+    }
+)
+```
+
+
+
+
+
+## Example: Form Validation Using Nested Stacks
+
 Let's create a stack that parses the body of a request into JSON and ensures it exists before allowing the request through:
 
 ```javascript
