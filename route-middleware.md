@@ -35,7 +35,7 @@ module.exports = stack(
         console.log("First")
         next()                          
     },
-    
+
     // Nested stack
     stack(
         ({req, res, next}) => {
@@ -46,17 +46,15 @@ module.exports = stack(
             console.log("Third")
             next({req, res}) // but you can if you wish :)
         },
-    )
+    ),
+    
+    // proceed
     ({req, res, next}) => {
         console.log("Fourth")
         next({req, res})                
     }
 )
 ```
-
-
-
-
 
 ## Example: Form Validation Using Nested Stacks
 
