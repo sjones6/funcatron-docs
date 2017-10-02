@@ -47,7 +47,7 @@ module.exports = stack(
             next({req, res}) // but you can if you wish :)
         },
     ),
-    
+
     // proceed
     ({req, res, next}) => {
         console.log("Fourth")
@@ -55,6 +55,12 @@ module.exports = stack(
     }
 )
 ```
+
+This code isn't the cleanest, but you get the gist. You can also export stacks in order to make stacks easy to compose from discrete parts.
+
+The real power of a stack is that if you don't call `next`, the rest of the stack is never run. This allows you to reject requests that fail validations.
+
+
 
 ## Example: Form Validation Using Nested Stacks
 
