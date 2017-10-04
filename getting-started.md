@@ -28,7 +28,7 @@ module.exports = make({
 })
 ```
 
-Once you have funcatron configured, you can use it like so:
+Once you have funcatron configured, you can use just like you would by requiring funcatron directly:
 
 ```javascript
 const makeFuncatron = require("./make-funcatron")
