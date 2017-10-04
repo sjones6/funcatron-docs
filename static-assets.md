@@ -2,18 +2,21 @@
 
 \(since v. 0.0.2+\)
 
-Funcatron provides a helper for serving static assets while still providing you complete control.
+By default, static assets are served from a `public` directory. You can configure the directory by passing in a new path relative to the current working directory for the server:
 
 ```javascript
-const { 
-    funcatron,
-    static
-} = require('funcatron')
+const { make } = require('funcatron')
 
-const serveStatic = static("public")  // directory name for static assets relative to the server process root
+const funcatron = make({
+  static: 'static_assets/'
+})
+
+// supply any other routes
 funcatron([
-    ...serveStatic,
-    ...otherRoutes
+  {
+    method: 'get',  
+    handler: ({req, res}) => res.end('Hello!')
+  }
 ]).listen(8000)
 ```
 
