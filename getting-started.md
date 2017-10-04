@@ -5,6 +5,8 @@ Let's say you need to supply a custom error handler or 404 handler, you'll want 
 Use the `make` method to supply this configuration. Any supplied option overrides the default:
 
 ```javascript
+// make-funcatron.js
+
 const { make } = require("funcatron")
 
 module.exports = make({
@@ -24,6 +26,21 @@ module.exports = make({
     // otherwise the request will hang and eventually time out.
     err: ({req, res, err}) => res.end("You've hit an error!")
 })
+```
+
+Once you have funcatron configured, you can use it like so:
+
+```javascript
+const makeFuncatron = require("./make-funcatron")
+
+// This is
+const server = makeFuncatron([
+  {
+    method: "get",
+    path: "/home",
+    handler: ({req, res}) => res.end("Welcome home!")
+  }
+])
 ```
 
 
