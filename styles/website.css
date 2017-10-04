@@ -1,3 +1,8 @@
+h2 {
+    font-family: serif;
+    margin-bottom: .3em
+}
+
 .body-inner {
     font-family: sans-serif;
 }
