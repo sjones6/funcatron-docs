@@ -73,7 +73,7 @@ module.exports = stack(
     ({req, res, next}) => jsonParser(req, res, next), // parse body
     ({req, res, next}) => {                           // only allow request that have bodies through.
         if (!req.body) {
-            res.statusCode = 400;
+            res.statusCode = 400
             res.end("Body required")
         } else {
             next()
@@ -103,12 +103,12 @@ Using this higher-order function, we can create all sorts of validations. Let's 
 
 ```javascript
 // validate-user-registration.js
-const validateBody = require('./validate-body')
+const validateBody = require("./validate-body")
 
 const validateUser = validateBody(
     ({req, res, next}) => {
        if (!req.body.email && !req.body.name) {
-           res.statusCode = 400;
+           res.statusCode = 400
            res.end("Name and email required")
        } else {
            next()
@@ -125,7 +125,7 @@ Our middleware stack now parses the JSON body into a useful format and ensures t
 // user-registration-route.js
 const { stack } = require("funcatron")
 const validateRegistration = require("./validate-user-registration")
-const createUser = require('./create-user') // some method that persists to DB
+const createUser = require("./create-user") // some method that persists to DB
 
 module.exports = {
    path: "/register",

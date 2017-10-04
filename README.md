@@ -33,7 +33,7 @@ or
 First, let's re-create the above example in funcatron
 
 ```javascript
-const { funcatron } = require('funcatron')
+const funcatron = require('funcatron')
 
 const http = funcatron([{
    handler: ({req, res}) => res.end("Hello world!")
