@@ -33,7 +33,7 @@ Once you have funcatron configured, you can use it like so:
 ```javascript
 const makeFuncatron = require("./make-funcatron")
 
-// Pass in the routes needed
+// Pass in the routes array
 const server = makeFuncatron([
   {
     method: "get",
