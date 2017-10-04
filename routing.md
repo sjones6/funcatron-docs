@@ -3,7 +3,8 @@
 In order to make routes more maintainable, use the spread operator:
 
 ```javascript
-const authRoutes = require('./auth-routes')
+const funcatron = require("funcatron")
+const authRoutes = require("./auth-routes")
 
 funcatron([
     {
@@ -46,7 +47,7 @@ Route groups allow you to apply a path prefix and a middleware method to all rou
 A route group take an object that defines that route group, which can contain two optional group defaults: a path prefix and a middleware handler to apply to the group. While both are technically optional, there's not much use in defining a group that omits both of these.
 
 ```javascript
-const { group } = require('funcatron')
+const { group } = require("funcatron")
 const checkAuth = require("./middleware/check-auth")
 
 
