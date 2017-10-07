@@ -1,49 +1,56 @@
-# Configuration
+## Getting Started
 
-Let's say you need to supply a custom error handler or 404 handler, you'll want to pass a number of configuration options.
-
-Use the `make` method to supply this configuration. Any supplied option overrides the default:
+At its core, an Node web server is nothing more than a callback that receives a request and response object every time a request is received:
 
 ```javascript
-// make-funcatron.js
+const { createServer } = require('http')
 
-const { make } = require("funcatron")
+const http = createServer((req, res) => res.end("Hello world!"))
 
-module.exports = make({
-
-    // Path to server static resources; pass `false` to disable any static file serving
-    static: "public",
-
-    // Enable HTTPS; pass an object that will be passed into https.createServer to enable HTTPS.
-    // See Node documentation for these values: https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
-    https: false,
-
-    // Handle 404
-    lost: ({req, res}) => res.end("You're lost"),
-
-    // Handle any errors caught by funcatron while processing a request.
-    // Remember that you will also need to handle the serving a response
-    // otherwise the request will hang and eventually time out.
-    err: ({req, res, err}) => res.end("You've hit an error!")
-})
+http.listen(8000)
 ```
 
-Once you have funcatron configured, you can use just like you would by requiring funcatron directly:
+Stripped of all fluff, Funcatron is merely the server callback that pipes the request and response through a series of functions until a response is served back to the client.
+
+## Basic Example
+
+First, let's re-create the above example in funcatron
 
 ```javascript
-const makeFuncatron = require("./make-funcatron")
+const funcatron = require('funcatron')
 
-// Pass in the routes array
-const server = makeFuncatron([
-  {
-    method: "get",
-    path: "/home",
-    handler: ({req, res}) => res.end("Welcome home!")
-  }
+const http = funcatron([{
+   handler: ({req, res}) => res.end("Hello world!")
+}])
+
+http.listen(8000)
+```
+
+Now, this isn't a very interesting application since it returns the same response no matter what is requested.
+
+So, let's add a few more routes:
+
+```javascript
+const http = funcatron([
+   {
+      path: "/",
+      method: "get",
+      handler: ({req, res}) => res.end("Hello world!")
+   },
+   {
+      path: "/login",
+      method: "post",
+      handler: ({req, res}) => res.end("Welcome! You're logged in!")
+   },
+   {
+      handler: ({req, res}) => {
+         res.statusCode = 400
+         res.end("Not found")
+      }
+   }
 ])
 
-module.exports = server
+http.listen(8000)
 ```
 
-
-
+That's a little better, but it's going to get really cumbersome for any serious application with more than a handful of routes. [Routing in Functatron](/routing.md)

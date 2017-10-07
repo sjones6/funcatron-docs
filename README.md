@@ -1,73 +1,35 @@
 # Funcatron
 
-Funcatron is a functional framework for building Node applications.
-
-## Introduction
-
-At its core, an Node web server is nothing more than this:
-
-```javascript
-const { createServer } = require('http')
-
-const http = createServer((req, res) => res.end("Hello world!"))
-
-http.listen(8000)
-```
-
-In other words, the HTTP server listens for request coming in to a certain port, generates a `req`/`res` object pair, and passes them into a callback.
-
-Stripped of all fluff, Funcatron is nothing other than the callback that is passed into the `createServer` method and enough scaffolding to make composing the functions that handle HTTP requests easy.
-
-## Installation
-
-Install via npm or yarn:
-
-`npm install funcatron --save`
-
-or
-
-`yarn add funcatron`
-
-## Basic Example
-
-First, let's re-create the above example in funcatron
+Funcatron is a functional framework for composing Node applications.
 
 ```javascript
 const funcatron = require('funcatron')
-
 const http = funcatron([{
-   handler: ({req, res}) => res.end("Hello world!")
-}])
-
-http.listen(8000)
+    path: "/hello",
+    method: "get",
+    handler: ({req, res}) => res.end("Hello world! Yours sincerely, Funcatron")
+}]).listen(8000)
 ```
 
-Now, this isn't a very interesting application since it returns the same response no matter what is requested.
+## Another Node framework, really?
 
-So, let's add a few more routes:
+There are lots of great frameworks for writing Node applications, but none of them focus on functional programming.
 
-```javascript
-const http = funcatron([
-   {
-      path: "/",
-      method: "get",
-      handler: ({req, res}) => res.end("Hello world!")
-   },
-   {
-      path: "/login",
-      method: "post",
-      handler: ({req, res}) => res.end("Welcome! You're logged in!")
-   },
-   {
-      handler: ({req, res}) => {
-         res.statusCode = 400
-         res.end("Not found")
-      }
-   }
-])
+(If that statement is inaccurate, please open an [issue](https://github.com/sjones6/funcatron/issues) and I'll mention them here and how they differ.)
 
-http.listen(8000)
-```
+## How does this compare to Express or Sails?
 
-That's a little better, but it's going to get really cumbersome for any serious application with more than a handful of routes. [Routing in Functatron](/routing.md)
+Both Funcatron and Express are middleware style, minimal frameworks, although the API is totally different and Funcatron's focus on functional programming is certainly different.
+
+Sails is a full-featured and relatively-opinionated framework. It has opinions about framework architecture (MVC) and comes with things like an ORM. With Funcatron, it has no opinions about those things and you can plug in your own ORM if necessary.
+
+## Core Values
+
+* Functional programming (obviously)
+* Testable - applications should be easy to test
+* Elegant - composing asynchronous pipelines to handle requests should easy and elegant
+
+## Get Started
+
+Take a look at the [quick start](/quick-start.md) or [dive into the larger tutorial](/getting-started.md).
 

@@ -131,7 +131,7 @@ module.exports = {
    path: "/register",
    method: "post",
    handler: stack(
-       validateUser, 
+       validateRegistration, 
         ({req, res}) => createUser(req.body, err => {
             return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
         })
@@ -141,7 +141,39 @@ module.exports = {
 
 Eventually, you'd need to pass this into the routes array passed into the `funcatron` method.
 
-## Groups and Stacks
+## Eager Stacks
 
+Stacks are lazy-evaluated at time of request in order to provide nesting capabilities. However, for the extreme performance-minded, you can take advantage of the `eagerStack`:
 
+Let's create an eagerStack that handles updates to a user profile:
+```javascript
+const { eagerStack } = require('funcatron')
+const jsonParser = require("body-parser").json()
+const updateUser = require("./update-user") // some method that persists to DB
 
+module.exports = {
+   path: "/profile",
+   method: "post",
+   handler: eagerStack(
+        ({req, res, next}) => {
+            jsonParser(req, res, () => next({req, res}))
+        },
+        ({req, res, next}) => {                           // only allow request that have bodies through.
+            if (!req.body) {
+                res.statusCode = 400
+                res.end("Form input required required")
+            } else {
+                next({req, res})
+            }
+        },
+        ({req, res}) => updateUser(req.body, err => {
+            return (!err) ? res.end("Success!") : res.end("Whoops! Failure")
+        })
+   )
+}
+```
+
+Limitations of `eagerStack`:
+
+* It cannot be nested (although you can nest regular `stacks` within `eagerStacks`)
+* Have to return the request/response in `next`, like so `next({req, res})`
