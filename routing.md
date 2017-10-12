@@ -85,3 +85,27 @@ Groups can be composed together and nested, building up a stack of middleware an
 
 However, chances are that this model will not be flexible enough for composing. [Middleware stacks](/route-middleware.md) allow you flexibility to compose together functions into a powerful pipeline.
 
+## Resource Routes
+
+RESTful resources can be created with the `resource` method and added into your routes array:
+
+```javascript
+
+const { funcatron, resource } = require('funcatron')
+
+// Create an array 
+const userResource = resource("/user/:user", {
+    get: ({req, res}) => res.end("Your user profile"),
+    post: ({req, res}) => res.end("Let's update that profile of yours"),
+    delete: ({req, res}) => res.end("Whoops! Sorry to see you go!")
+})
+
+funcatron([
+    {
+        path: "/",
+        method: "get",
+        handler: ({req, res}) => res.end("Hello, from Funcatron!")
+    },
+    ...userResource
+]).listen(8000)
+```
