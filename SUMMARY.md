@@ -13,6 +13,11 @@
 * [Configuration](configuration.md)
 * [Static Assets](static-assets.md)
 
+## Epilogue
+
+* [Using Express Middleware](e2f.md)
+* [GraphQL](graphql.md)
+
 ## Contributing
 
 * [Code of Conduct](code-of-conduct.md)
